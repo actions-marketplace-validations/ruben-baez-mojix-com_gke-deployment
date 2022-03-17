@@ -1,0 +1,49 @@
+name: 'Kubernetes deployment GKE'
+author: 'Ruben'
+description: 'Kubernetes deployment GKE'
+inputs:
+  image:
+    description: 'Docker image'
+    required: true
+  project:
+    description: 'GCP project id'
+    required: true
+  tag:
+    description: 'Image tag'
+    required: true
+  sha:
+    description: 'Image sha in case of using an specific version'
+    required: false
+  deploy:
+    description: 'deploy name to upgrade'
+    required: false
+  project_id:
+    description: 'project id'
+    required: true
+  project_location:
+    description: 'project location'
+    required: true
+  project_clusterID:
+    description: 'project - cluster id'
+    required: true
+  project_cluster_name:
+    description: 'project - cluster name'
+    required: true
+
+branding:
+  icon: 'package'
+  color: 'green'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.image }}
+    - ${{ inputs.project }}
+    - ${{ inputs.tag }}
+    - ${{ inputs.sha }}
+    - ${{ inputs.deploy }}
+    - ${{ inputs.project_id }}
+    - ${{ inputs.project_location }}
+    - ${{ inputs.project_cluster_name }}
+  pre-entrypoint: 'setup.sh'
+  entrypoint: 'entrypoint.sh'
