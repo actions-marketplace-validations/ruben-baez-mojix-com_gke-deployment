@@ -36,33 +36,18 @@ import { ClusterClient } from './gkeClient';
 async function run(): Promise<void> {
     try {
         // Get inputs
-        // let projectID = getInput('project_id');
-        // let location = getInput('location');
-        // let clusterID = "engineering-vizix-cloud";
-        // let clusterName = "eng-vizix-cloud";
-        // let clusterlocation = "us-central1-a";
+        // updated 
         let clusterID = <string>process.env.CLUSTER_ID;
         let clusterName = process.env.CLUSTER_NAME;
         let clusterlocation = process.env.CLUSTER_LOCATION;
 
         const useAuthProvider = true;
         const useInternalIP = false;
-        // let contextName = getInput('context_name');
 
         // Add warning if using credentials
         let credentialsJSON: Credential | undefined;
-        // if (credentials) {
-        //     logWarning(
-        //         'The "credentials" input is deprecated. ' +
-        //         'Please switch to using google-github-actions/auth which supports both Workload Identity Federation and JSON Key authentication. ' +
-        //         'For more details, see https://github.com/google-github-actions/get-gke-credentials#authorization',
-        //     );
 
-        //     credentialsJSON = parseCredential(credentials);
-        // }
-
-        // Pick the best project ID.
-        
+        // updated no necesary values        
         let projectID = clusterName;
         if (clusterName) {
             logInfo(`Extracted projectID "${projectID}" from cluster resource name`);
