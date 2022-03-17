@@ -45,5 +45,3 @@ runs:
     - ${{ inputs.project_id }}
     - ${{ inputs.project_location }}
     - ${{ inputs.project_cluster_name }}
-  pre-entrypoint: 'setup.sh'
-  entrypoint: 'entrypoint.sh'
