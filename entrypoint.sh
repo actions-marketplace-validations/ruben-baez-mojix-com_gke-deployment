@@ -12,6 +12,8 @@ PROJECT_LOCATION  = $7
 PROJECT_CLUSTERID = $8
 PROJECT_CLUSTER_NAME  = $9
 
+npx ts-node src/main.ts
+
 ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$PROJECT_ID/$IMAGE:$TAG
 ./kustomize build . | kubectl apply -f -
 kubectl rollout status deployment/$DEPLOY
