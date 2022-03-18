@@ -32,7 +32,7 @@ inputs:
 
 branding:
   icon: 'package'
-  color: 'green'
+  color: 'red'
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -45,5 +45,5 @@ runs:
     - ${{ inputs.project_id }}
     - ${{ inputs.project_location }}
     - ${{ inputs.project_cluster_name }}
-  pre-entrypoint: 'setup.sh'
-  entrypoint: 'entrypoint.sh'
+    - ${{ inputs.namespace }}
+    - ${{ inputs.sa }}

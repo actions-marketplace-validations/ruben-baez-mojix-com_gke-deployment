@@ -37,9 +37,9 @@ async function run(): Promise<void> {
     try {
         // Get inputs
         // updated 
-        let clusterID = <string>process.env.CLUSTER_ID;
-        let clusterName = process.env.CLUSTER_NAME;
-        let clusterlocation = process.env.CLUSTER_LOCATION;
+        let clusterID = <string>process.env.INPUT_PROJECT_CLUSTERID;
+        let clusterName = process.env.INPUT_PROJECT_ID;
+        let clusterlocation = process.env.INPUT_PROJECT_LOCATION;
 
         const useAuthProvider = true;
         const useInternalIP = false;
@@ -106,8 +106,8 @@ async function run(): Promise<void> {
             if (!workspace) {
                 throw new Error('Missing $GITHUB_WORKSPACE!');
             }
-
-            const kubeConfigPath = await writeSecureFile(randomFilepath(workspace), kubeConfig);
+            // write config with specific name
+            const kubeConfigPath = await writeSecureFile("kube-config.yaml", kubeConfig);
             exportVariable('KUBECONFIG', kubeConfigPath);
             logInfo(`Successfully created and exported "KUBECONFIG" at ${kubeConfigPath}`);
         } catch (err) {

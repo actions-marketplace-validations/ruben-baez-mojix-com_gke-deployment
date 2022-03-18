@@ -17,19 +17,33 @@ ARG deploy
 ARG project_location
 ARG project_clusterID
 ARG project_cluster_name
+ARG namespace
 
+ENV TAG = ${tag}
+ENV IMAGE = ${image}
+ENV PROJECT_ID = ${project}
 ENV CLUSTER_ID = ${project_clusterID}
 ENV CLUSTER_NAME = ${project_cluster_name}
 ENV CLUSTER_LOCATION = ${project_location}
 
-COPY . .
+COPY . /home
 
-RUN apk add curl nodejs npm
-RUN npm install 
+RUN mkdir -p /github/workspace \
+    cd /home \
+    && apk add curl nodejs npm \
+    && npm install
 
-RUN curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64 \
-    && chmod u+x ./kustomize
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+    && install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \
+    && chmod +x kubectl \
+    && mkdir -p ~/.local/bin \
+    && mv ./kubectl ~/.local/bin/kubectl \
+    && kubectl version --client
 
-COPY "entrypoint.sh" "/entrypoint.sh"
-RUN chmod +x /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+# RUN curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64 \
+#     && chmod u+x ./kustomize
+
+WORKDIR "/github/workspace"
+
+RUN chmod +x /home/entrypoint.sh
+ENTRYPOINT ["sh", "/home/entrypoint.sh"]
