@@ -39,7 +39,7 @@ kubectl rollout restart deploy/$INPUT_DEPLOY -n $INPUT_NAMESPACE
 kubectl get deploy/$INPUT_DEPLOY -o wide -n $INPUT_NAMESPACE
 
 # Capture output
-output=$("$INPUT_DEPLOY deploy updated with: $IMAGE")
+output=$("$INPUT_DEPLOY deploy updated with: $INPUT_IMAGE")
 current_date=$(date)
 echo "deployment time: $current_date"
 # Preserve output for consumption by downstream actions
